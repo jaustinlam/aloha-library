@@ -1,21 +1,20 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+# from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Books, Users, CheckOut, CheckIn
-from flask import session # Use 'session' when referencing session data
-import random
-import string
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
-import httplib2
-import json
-from flask import make_response
-import requests
+# import random
+# import string
+# from oauth2client.client import flow_from_clientsecrets
+# from oauth2client.client import FlowExchangeError
+# import httplib2
+# import json
+# from flask import make_response
+# import requests
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 # Create connection to database and start session
-engine = create_engine('sqlite:///librarydata.db')
+engine = create_engine('postgres://blejslzgodbfze:YmGABBtmbcP55dscnFEgAk66ES@ec2-107-21-248-129.compute-1.amazonaws.com:5432/d2qgb9ae9hbirv')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind = engine)
 sess = DBSession() # Use 'sess' when referencing database session

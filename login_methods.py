@@ -15,7 +15,7 @@ import requests
 app = Flask(__name__)
 
 # Create connection to database and start session
-engine = create_engine('sqlite:///librarydata.db')
+engine = create_engine('postgres://blejslzgodbfze:YmGABBtmbcP55dscnFEgAk66ES@ec2-107-21-248-129.compute-1.amazonaws.com:5432/d2qgb9ae9hbirv')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind = engine)
 sess = DBSession() # Use 'sess' when referencing database session

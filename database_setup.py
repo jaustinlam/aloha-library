@@ -45,7 +45,7 @@ class Books(Base):
     image = Column(
         String(250), nullable = False)
     description = Column(
-        UnicodeText(64))
+        String(500))
     author = Column(
         String(80), nullable = False)
     isbn = Column(
@@ -161,5 +161,5 @@ class CheckIn(Base):
         }
 
 engine = create_engine(
-    'sqlite:///librarydata.db')
+    'postgres://blejslzgodbfze:YmGABBtmbcP55dscnFEgAk66ES@ec2-107-21-248-129.compute-1.amazonaws.com:5432/d2qgb9ae9hbirv')
 Base.metadata.create_all(engine)
