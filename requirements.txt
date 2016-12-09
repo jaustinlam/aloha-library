@@ -7,7 +7,6 @@ PyYAML==3.10
 SQLAlchemy==0.8.4
 SecretStorage==2.0.0
 Werkzeug==0.8.3
-apt-xapian-index==0.45
 argparse==1.2.1
 chardet==2.0.1
 cloud-init==0.7.5
