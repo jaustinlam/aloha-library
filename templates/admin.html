@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class ="col s12 teal white-text head">
+        <h2 class="header">Admin Console</h2>
+        <h5>All Users</h5>
+    </div>
+    <ul class="collection">
+        {% for u in users: %}
+            <li class="collection-item">
+                {{u.name}}
+                <br>
+                {{u.email}}
+                <br>
+                <a href="{{ url_for('userPage', user_id = u.id)}}">
+                    Edit</a>
+                <a method='post' href="{{url_for('deleteUser', user_id = u.id)}}">Delete</a>
+                <br>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
