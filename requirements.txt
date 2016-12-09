@@ -27,7 +27,6 @@ pyasn1-modules==0.0.8
 pycrypto==2.6.1
 pycurl==7.19.3
 pyserial==2.6
-python-apt==0.9.3.5ubuntu2
 python-debian==0.1.21-nmu2ubuntu2
 requests==2.2.1
 rsa==3.4.2
