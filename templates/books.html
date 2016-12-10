@@ -6,42 +6,45 @@
         <h2 class="header">{{ category.name }}</h2>
         <!--Button for new category-->
         {% if session['username']: %}
-        <a href="{{ url_for('newBook', categories_id = category.id) }}" class="btn-floating tooltipped btn-small waves-effect waves-light white right" data-position="bottom" data-delay="50" data-tooltip='Add a Book'><i class="material-icons teal-text">add</i></a>
+            <a href="{{ url_for('newBook', categories_id = category.id) }}" class="btn-floating tooltipped btn-small waves-effect waves-light white right" data-position="bottom" data-delay="50" data-tooltip='Add a Book'><i class="material-icons teal-text">add</i></a>
         {% endif %}
     </div>
 
-        {% for b in books: %}
-    <div class="col s6 m4">
-        <div class="card sticky-action hoverable">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="{{b.image}}">
-            </div>
-            <div class="card-content">
-                {% if session['username']: %}
-                <a href="{{ url_for('editBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Edit {{b.title}}"><i class="material-icons">edit</i></a>
-                <a href="{{ url_for('delBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Delete {{b.title}}"><i class="material-icons">delete</i></a>
-                {% if b.checkedout == False: %}
-                <a href="{{ url_for('checkOutBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Available To Check Out"><i class="material-icons">done</i></a>
-                {% elif b.checkedout == True: %}
-                <a href="{{ url_for('checkInBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Unavailable"><i class="material-icons">close</i></a>
-                {% endif %}
-                {% else: %}
-                <a href="{{ url_for('showLogin')}}">
-                <p>Log in for more options</p></a>
-                {% endif %}
+    {% for b in books: %}
+        <div class="col s6 m4">
+            <div class="card sticky-action hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="{{b.image}}">
+                </div>
+                <div class="card-content">
+                    {% if session['username']: %}
+                        <!--Edit button-->
+                        <a href="{{ url_for('editBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Edit {{b.title}}"><i class="material-icons">edit</i></a>
+                        <!--Delete button-->
+                        <a href="{{ url_for('delBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Delete {{b.title}}"><i class="material-icons">delete</i></a>
+                        <!--Check out and Check in buttons-->
+                        {% if b.checkedout == False: %}
+                            <a href="{{ url_for('checkOutBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Available To Check Out"><i class="material-icons">done</i></a>
+                        {% elif b.checkedout == True: %}
+                            <a href="{{ url_for('checkInBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Unavailable"><i class="material-icons">close</i></a>
+                        {% endif %}
+                    {% else: %}
+                        <!--Log in if no user-->
+                        <a href="{{ url_for('showLogin')}}">
+                        <p>Log in for more options</p></a>
+                    {% endif %}
 
-            </div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">
-                    {{ b.title }}
-                    <i class="material-icons right">close</i></span>
-                <p>{{ b.description }}</p>
+                </div>
+                <div class="card-reveal">
+                    <!--Book info when revealed-->
+                    <span class="card-title grey-text text-darken-4">
+                        {{ b.title }}
+                        <i class="material-icons right">close</i></span>
+                    <p>{{ b.description }}</p>
+                </div>
             </div>
         </div>
-    </div>
-        {% endfor %}
-
-
+    {% endfor %}
 </div>
 
 

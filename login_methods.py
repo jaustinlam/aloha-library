@@ -1,24 +1,13 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Books, Users, CheckOut, CheckIn
-from flask import session # Use 'session' when referencing session data
-import random
-import string
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
-import httplib2
-import json
-from flask import make_response
-import requests
-
-app = Flask(__name__)
 
 # Create connection to database and start session
-engine = create_engine('postgres://blejslzgodbfze:YmGABBtmbcP55dscnFEgAk66ES@ec2-107-21-248-129.compute-1.amazonaws.com:5432/d2qgb9ae9hbirv')
+engine = create_engine('sqlite:///librarydata.db')
 Base.metadata.bind = engine
-DBSession = sessionmaker(bind = engine)
-sess = DBSession() # Use 'sess' when referencing database session
+DBSession = sessionmaker(bind=engine)
+sess = DBSession()  # Use 'sess' when referencing database session
+
 
 def queryUsers():
     '''Query all Users
@@ -30,6 +19,7 @@ def queryUsers():
     users = sess.query(Users).all()
     return users
 
+
 def getUserBySession(facebookuser):
     ''' Finds a user by session information
 
@@ -40,10 +30,11 @@ def getUserBySession(facebookuser):
             The user or None
     '''
     try:
-        x = sess.query(Users).filter_by(id = facebookuser['facebook_id']).one()
+        x = sess.query(Users).filter_by(id=facebookuser['facebook_id']).one()
         return x
     except:
         None
+
 
 def getUserByID(user_id):
     ''' Finds a user by id number
@@ -55,11 +46,10 @@ def getUserByID(user_id):
             The user or None
     '''
     try:
-        x = sess.query(Users).filter_by(id = user_id).one()
+        x = sess.query(Users).filter_by(id=user_id).one()
         return x
     except:
         None
-
 
 
 def compareUsers(facebookuser):
@@ -77,8 +67,6 @@ def compareUsers(facebookuser):
         user = getUserByID(facebookuser)
 
 
-
-
 def createUser(facebookuser):
     ''' Creates a new user
 
@@ -87,12 +75,13 @@ def createUser(facebookuser):
 
     '''
     newUser = Users(
-                name = facebookuser['username'],
-                id = facebookuser['facebook_id'],
-                email = facebookuser['email'],
-                administrator = False)
+        name=facebookuser['username'],
+        id=facebookuser['facebook_id'],
+        email=facebookuser['email'],
+        administrator=False)
     sess.add(newUser)
     sess.commit()
+
 
 def editUser(user):
     ''' Edits and commits a user
@@ -103,6 +92,7 @@ def editUser(user):
     sess.add(user)
     sess.commit()
 
+
 def deleteUser(user):
     '''Deletes a user from the database
 
@@ -111,12 +101,3 @@ def deleteUser(user):
     '''
     sess.delete(user)
     sess.commit()
-
-
-
-
-
-
-
-
-

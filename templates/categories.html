@@ -10,11 +10,11 @@
     <div class ="col s12 teal head" >
         <!--Button for new category-->
         {% if session['username']: %}
-        <a href="{{ url_for('newCategory') }}" class="btn-floating tooltipped btn-small waves-effect waves-light white right" data-position="top" data-delay="50" data-tooltip="Add New Category"><i class="material-icons teal-text">add</i></a>
+            <a href="{{ url_for('newCategory') }}" class="btn-floating tooltipped btn-small waves-effect waves-light white right" data-position="top" data-delay="50" data-tooltip="Add New Category"><i class="material-icons teal-text">add</i></a>
         {% endif %}
     </div>
     <!--Category cards-->
-        {% for c in categories: %}
+    {% for c in categories: %}
         <div class="col s6">
             <div class="card horizontal hoverable">
                 <div class="card-image">
@@ -26,19 +26,19 @@
                     </div>
                     <div class="card-action teal lighten-5">
                         {% if session['username']: %}
-                        <a href="{{ url_for('editCategory', categories_id = c.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Edit {{c.name}}"><i class="material-icons">edit</i></a>
-                        <a href="{{ url_for('delCategory', categories_id = c.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Delete {{c.name}}"><i class="material-icons">delete</i></a>
+                            <!--Edit button-->
+                            <a href="{{ url_for('editCategory', categories_id = c.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Edit {{c.name}}"><i class="material-icons">edit</i></a>
+                            <!--Delete button-->
+                            <a href="{{ url_for('delCategory', categories_id = c.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Delete {{c.name}}"><i class="material-icons">delete</i></a>
                         {% else: %}
-                        <a href="{{ url_for('showLogin')}}">
-                            <p>Log in for more options</p></a>
+                            <!--Log in link if not logged in-->
+                            <a href="{{ url_for('showLogin')}}">
+                                <p>Log in for more options</p></a>
                         {% endif %}
-
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
-        {% print session['id']%}
-
+    {% endfor %}
 </div>
 {% endblock %}
