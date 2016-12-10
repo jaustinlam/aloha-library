@@ -26,7 +26,7 @@ A fictional library built that allows user sign up, see books and check books in
 **** FOR DEVELOPMENT ONLY ****
 * Making a user Admin
 > If you modify your nickname to "Admin" you will automatically be assigned as an admin.
-
+******************************
 * Viewing a Categories Books
 > Click on the Category name
 
@@ -70,7 +70,8 @@ A fictional library built that allows user sign up, see books and check books in
 5. Submit a pull request :D
 
 ## Credits
-Built with Flask, SQL Alchemy, Materialize JSS
+Built with Flask, SQL Alchemy, Materialize JSS, Jinja,
+Image from pixabay.com
 
 ## History
 
