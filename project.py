@@ -10,6 +10,7 @@ import json
 from flask import make_response
 import requests
 import secret_key
+import bleach
 import categories_methods  # Category database methods
 import books_methods  # Book database methods
 import login_methods  # User database methods
@@ -44,8 +45,9 @@ def fbconnect():
     app_secret = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_secret']
     url = ('https://graph.facebook.com/oauth/access_token?grant_type'
-        '=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
-        app_id, app_secret, access_token))
+           '=fb_exchange_token&client_id='
+           '%s&client_secret=%s&fb_exchange_token=%s' % (
+               app_id, app_secret, access_token))
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
 
@@ -67,7 +69,7 @@ def fbconnect():
 
     # Users picture
     url = ('https://graph.facebook.com/v2.4/me/picture?'
-        '%s&redirect=0&height=200&width=200' % token)
+           '%s&redirect=0&height=200&width=200' % token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -166,7 +168,7 @@ def newCategory():
     if request.method == 'POST':
         user = login_methods.getUserBySession(session)
         if user:  # Checks for a logged in user
-            name = request.form['name']
+            name = bleach.clean(request.form['name'])
             user_id = user.id
             categories_methods.newCategory(name, user_id)
             flash("Successfully created new category %s" % name)
@@ -178,7 +180,7 @@ def newCategory():
         return render_template('newcategories.html')
 
 
-@app.route('/categories/<int:categories_id>/edit', methods = ['GET', 'POST'])
+@app.route('/categories/<int:categories_id>/edit', methods=['GET', 'POST'])
 def editCategory(categories_id):
     ''' Edit a Category
 
@@ -186,10 +188,10 @@ def editCategory(categories_id):
             categories_id = The id of the category
 
     '''
-    category=categories_methods.categoryByID(categories_id)
-    user=login_methods.getUserBySession(session)
+    category = categories_methods.categoryByID(categories_id)
+    user = login_methods.getUserBySession(session)
     if request.method == 'POST':
-        name=request.form['name']
+        name = bleach.clean(request.form['name'])
         if user:  # Checks for a logged in user
             # Checks to see if user is author of category or admin
             if user.id == category.user_id or user.administrator is True:
@@ -200,7 +202,7 @@ def editCategory(categories_id):
                 else:
                     flash("Sorry you didn't change anything")
                     return render_template('editcategories.html',
-                                           category = category)
+                                           category=category)
             else:
                 flash("user is not author of the category")
                 return render_template('editcategories.html',
@@ -223,7 +225,7 @@ def delCategory(categories_id):
     user = login_methods.getUserBySession(session)
 
     if request.method == 'POST':
-        if user: # Checks for logged in user
+        if user:  # Checks for logged in user
             # Checks if user is author of category or admin
             if user.id == category.user_id or user.administrator is True:
                 categories_methods.delCategory(category)
@@ -268,12 +270,12 @@ def newBook(categories_id):
     category = categories_methods.categoryByID(categories_id)
     user = login_methods.getUserBySession(session)
     if request.method == 'POST':
-        if user: # Checks for logged in user
-            title = request.form['title']
-            isbn = request.form['isbn']
-            url = request.form['image']
-            author = request.form['author']
-            description = request.form['description']
+        if user:  # Checks for logged in user
+            title = bleach.clean(request.form['title'])
+            isbn = bleach.clean(request.form['isbn'])
+            url = bleach.clean(request.form['image'])
+            author = bleach.clean(request.form['author'])
+            description = bleach.clean(request.form['description'])
             user_id = user.id
             books_methods.newBook(
                 category.id, title, isbn, url, author, description, user_id)
@@ -301,15 +303,15 @@ def editBook(categories_id, book_id):
     if request.method == "POST":
         if user.id == book.user_id or user.administrator is True:
             if request.form['title'] != book.title:
-                book.title = request.form['title']
+                book.title = bleach.clean(request.form['title'])
             if request.form['isbn'] != book.isbn:
-                book.isbn = request.form['isbn']
+                book.isbn = bleach.clean(request.form['isbn'])
             if request.form['image'] != book.image:
-                book.image = request.form['image']
+                book.image = bleach.clean(request.form['image'])
             if request.form['author'] != book.author:
-                book.author = request.form['author']
+                book.author = bleach.clean(request.form['author'])
             if request.form['description'] != book.description:
-                book.description = request.form['description']
+                book.description = bleach.clean(request.form['description'])
             books_methods.editBook(book)
             flash("Successfully edited %s" % book.title)
             return redirect(url_for('showBooks',
@@ -424,13 +426,13 @@ def userPage(user_id):
         if editor.id == int(session['facebook_id']) \
                 or editor.administrator is True:
             if request.form['name'] != user.name:
-                user.name = request.form['name']
+                user.name = bleach.clean(request.form['name'])
                 # For test only, delete on production
                 # Will change user to admin if nickname changed to Admin
                 if request.form['name'] == "Admin":
                     user.administrator = True
             if request.form['email'] != user.email:
-                user.email = request.form['email']
+                user.email = bleach.clean(request.form['email'])
             checked = 'admin' in request.form
             ischecked = bool(checked)
             if ischecked != user.administrator \
