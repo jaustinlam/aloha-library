@@ -150,6 +150,11 @@ def categoriesBooksJSON():
 
 
 @app.route('/')
+def landingPage():
+    '''Method for landing page
+    '''
+    return render_template('main.html')
+
 @app.route('/categories/')
 def showCategories():
     ''' Main page for showing all Categories of books

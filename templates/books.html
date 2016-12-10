@@ -22,6 +22,7 @@
                         <a href="{{ url_for('editBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Edit {{b.title}}"><i class="material-icons">edit</i></a>
                         <!--Delete button-->
                         <a href="{{ url_for('delBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Delete {{b.title}}"><i class="material-icons">delete</i></a>
+
                         <!--Check out and Check in buttons-->
                         {% if b.checkedout == False: %}
                             <a href="{{ url_for('checkOutBook', categories_id = category.id, book_id = b.id)}}" class="btn-floating tooltipped btn-small waves-effect waves-light teal" data-position="bottom" data-delay="50" data-tooltip="Available To Check Out"><i class="material-icons">done</i></a>

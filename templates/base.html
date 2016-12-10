@@ -14,10 +14,16 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
     <script type="text/javascript" src="{{ url_for('static', filename ='materialize/js/materialize.min.js')}}"></script>
+    <script>
+        $( document ).ready(function(){
+            $(".button-collapse").sideNav();
+        })
+    </script>
     <nav class="transparent">
         <div class="nav-wrapper">
             <a href="{{ url_for('showCategories') }}" class="brand-logo teal-text">Aloha Library
-                <i class="material-icons teal-text">looks</i></a>
+            <i class="material-icons teal-text">looks</i></a>
+            <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons teal-text">menu</i></a>
 
             <ul class="right hide-on-med-and-down">
                 {% if not session['username']:%}
@@ -25,6 +31,16 @@
                 {% else: %}
                     <li><a href="{{url_for('userPage', user_id = session['facebook_id'])}}" class="teal-text"> Logged in as: {{session['username']}}</a></li>
                     <li><img class="thumb circle" src="{{session['picture']}}"></li>
+                    <li><a href="{{url_for('fbdisconnect')}}"class="waves-effect waves-light btn">Logout</a></li>
+                {% endif %}
+            </ul>
+            <!-- Mobile navigation -->
+            <ul class="side-nav" id="mobile-nav">
+                {% if not session['username']:%}
+                    <li><a href="{{url_for('showLogin')}}"class="waves-effect waves-light btn">Login</a></li>
+                {% else: %}
+                    <li><a href="{{url_for('userPage', user_id = session['facebook_id'])}}" class="teal-text center-align"> Logged in as: {{session['username']}}</a></li>
+                    <li><img class="mobilethumb circle" src="{{session['picture']}}"></li>
                     <li><a href="{{url_for('fbdisconnect')}}"class="waves-effect waves-light btn">Logout</a></li>
                 {% endif %}
             </ul>

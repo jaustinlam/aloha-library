@@ -8,9 +8,28 @@
     margin-top: 15px;
 }
 
+.mobilethumb{
+    height: 50px;
+    width: 50px;
+    margin-top: 15px;
+    display: block;
+    margin: auto;
+}
+
 .profile-circle{
     display: block;
     margin: auto;
     width: 200px;
     height: 200px;
+}
+
+.landing{
+    background-position: center;
+    background-size: cover;
+    background-image: url(/static/images/landing.jpg);
+    height: 75vh;
+}
+
+.maintitle{
+    margin-top: 100px;
 }

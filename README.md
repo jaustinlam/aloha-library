@@ -9,6 +9,7 @@ A fictional library built that allows user sign up, see books and check books in
 5. Launch the Vagrant VM and configure. the enter 'cd /vagrant' to navigate to project
 6. To intiate and populate your database. enter 'python database_setup.py' and then 'python populate_database.py'
 7. To run the project enter 'python project.py'.
+8. Open your browser and enter in 'localhost:8500'
 
 ## Usage
 * Logging in
