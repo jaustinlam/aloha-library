@@ -2,7 +2,7 @@
 A fictional library built that allows user sign up, see books and check books in and out
 
 ## Installation
-1. Go to https://github.com/jaustinlam/Swiss_system_tournament.git and download.
+1. Go to https://github.com/jaustinlam/aloha-library.git and download.
 2. Install [Python](https://www.python.org/downloads/)
 3. Install [Vagrant](https://www.vagrantup.com)
 4. Install [VirtualBox](https://www.virtualbox.org)
