@@ -126,7 +126,7 @@ def categoriesBooksJSON(category_id):
 
 @app.route(
     '/categories/<int:category_id>/books/<int:book_id>/JSON')
-def categoriesBooksJSON(category_id, book_id):
+def categoriesBookJSON(category_id, book_id):
     ''' JSON for a single book
 
         Args:
@@ -134,12 +134,12 @@ def categoriesBooksJSON(category_id, book_id):
             book_id = the id of the book
     '''
 
-    book = books_methods.booksFromID(book_id)
+    book = books_methods.bookFromID(book_id)
     return jsonify(Book=book.serialize)
 
 
 @app.route('/categories/JSON')
-def categoriesBooksJSON():
+def categoriesJSON():
     ''' JSON for all categories
 
     '''
@@ -432,10 +432,6 @@ def userPage(user_id):
                 or editor.administrator is True:
             if request.form['name'] != user.name:
                 user.name = bleach.clean(request.form['name'])
-                # For test only, delete on production
-                # Will change user to admin if nickname changed to Admin
-                if request.form['name'] == "Admin":
-                    user.administrator = True
             if request.form['email'] != user.email:
                 user.email = bleach.clean(request.form['email'])
             checked = 'admin' in request.form
@@ -443,7 +439,12 @@ def userPage(user_id):
             if ischecked != user.administrator \
                     and editor.administrator is True:
                 user.administrator = ischecked
+            # For test only, delete on production
+            # Will change user to admin if nickname changed to Admin
+            if request.form['name'] == "Admin":
+                user.administrator = True
             login_methods.editUser(user)
+            print user.administrator
             flash("Successfully edited %s" % user.name)
             return redirect(url_for('showCategories'))
         else:
