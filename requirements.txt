@@ -28,7 +28,7 @@ pycrypto==2.6.1
 pycurl==7.19.3
 pyserial==2.6
 requests==2.2.1
-rsa==3.4.2
+rsa==4.1
 simplejson==3.3.1
 six==1.10.0
 ssh-import-id==3.21
